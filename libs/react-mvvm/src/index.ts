@@ -1,1 +1,1 @@
-export * from './lib/react-mvvm';
+export * from './lib/mvvm';
