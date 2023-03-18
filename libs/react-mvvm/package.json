@@ -1,12 +1,15 @@
 {
-    "name": "@xeinebiu/react-mvvm",
-    "version": "0.0.1",
-    "main": "./index.js",
-    "types": "./index.d.ts",
-    "exports": {
-        ".": {
-            "import": "./index.mjs",
-            "require": "./index.js"
-        }
+  "name": "@xeinebiu/react-mvvm",
+  "version": "1.0.3",
+  "repository": {
+    "url": "https://github.com/xeinebiu/react-mvvm"
+  },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
     }
+  }
 }
