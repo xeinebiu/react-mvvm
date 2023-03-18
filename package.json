@@ -2,7 +2,10 @@
     "name": "xeinebiu",
     "version": "0.0.0",
     "license": "MIT",
-    "scripts": {},
+    "scripts": {
+      "start": "npx nx serve example",
+      "build-mvvm": "npx nx build react-mvvm"
+    },
     "private": true,
     "devDependencies": {
         "@nrwl/cypress": "15.8.7",
