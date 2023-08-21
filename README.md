@@ -90,5 +90,10 @@ export const MvvmPostsPage: FC = () => {
 };
 ````
 
+### Run the example App
+````shell
+npm run start
+````
+
 ### That's it
-Please refer to the example provided above and let us know if you have any questions or suggestions. If anything is unclear or needs improvement, please feel free to raise an issue so that we can address it. I am here to help you create maintainable and high-quality code.
+Please refer to the example provided under `apps/example` and let us know if you have any questions or suggestions. If anything is unclear or needs improvement, please feel free to raise an issue so that we can address it. I am here to help you create maintainable and high-quality code.
