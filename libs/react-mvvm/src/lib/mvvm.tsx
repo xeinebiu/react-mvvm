@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 
 type ViewModelProviders<Type> = {
-    [Property in keyof Type as `${string & Property}ViewModel`]: Type[Property];
+    [Property in keyof Type]: Type[Property];
 };
 
 const MvvmContext = React.createContext<
@@ -31,7 +31,7 @@ export function useMvvm<VM>(viewModels: VM): ViewModelProviders<VM> {
         const newViewModels = {};
 
         for (const key in viewModels) {
-            const newKey = `${key}ViewModel`;
+            const newKey = `${key}`;
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore

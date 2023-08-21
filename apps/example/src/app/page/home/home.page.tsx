@@ -1,19 +1,16 @@
 import React, { FC } from 'react';
-import { useViewModel } from '@xeinebiu/react-mvvm';
-import { ViewModelsType } from '../../vm';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
+import { useGlobalViewModel } from '../../vm';
 
 export const HomePage: FC = () => {
-    const { homeViewModel } = useViewModel<ViewModelsType>();
+    const { home } = useGlobalViewModel();
 
     return (
         <Flex justifyContent="center" alignContent="center">
-            {homeViewModel.loading ? (
+            {home.loading ? (
                 <Spinner />
             ) : (
-                <Text whiteSpace="pre-line">
-                    {homeViewModel.viewModelDescription}
-                </Text>
+                <Text whiteSpace="pre-line">{home.viewModelDescription}</Text>
             )}
         </Flex>
     );

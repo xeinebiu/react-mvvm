@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
-import { useViewModel } from '@xeinebiu/react-mvvm';
-import { ViewModelsType } from '../../vm';
 import { Box, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
+import { useGlobalViewModel } from '../../vm';
 export const MvvmPostsPage: FC = () => {
-    const { postsViewModel } = useViewModel<ViewModelsType>();
+    const { posts } = useGlobalViewModel();
 
     return (
         <Flex direction="column">
             <Heading>Posts with View Model</Heading>
-            {postsViewModel.loading ? (
+            {posts.loading ? (
                 <Box>
                     Loading content on View Model. Navigating to another page
                     will not forget the data and coming back will use the data
@@ -17,14 +16,14 @@ export const MvvmPostsPage: FC = () => {
                 </Box>
             ) : (
                 <Flex direction="column">
-                    {postsViewModel.addPostLoading ? (
+                    {posts.addPostLoading ? (
                         <Flex>
                             <Text>Adding another post ...</Text>
                             <Spinner />
                         </Flex>
                     ) : null}
                     <ul>
-                        {postsViewModel.posts.map(post => (
+                        {posts.posts.map(post => (
                             <li key={post}>{post}</li>
                         ))}
                     </ul>

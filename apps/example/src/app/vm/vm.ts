@@ -1,8 +1,7 @@
-import { PostsViewModel } from './posts.vm';
+import { useViewModel } from '@xeinebiu/react-mvvm';
 import { HomeViewModel } from './home.vm';
+import { PostsViewModel } from './posts.vm';
 
-export type ViewModelsType = {
-    posts: PostsViewModel;
-
-    home: HomeViewModel;
-};
+export function useGlobalViewModel() {
+    return useViewModel<{ home: HomeViewModel; posts: PostsViewModel }>();
+}

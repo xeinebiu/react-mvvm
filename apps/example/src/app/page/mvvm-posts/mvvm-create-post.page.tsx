@@ -1,6 +1,4 @@
 import React, { FC } from 'react';
-import { useViewModel } from '@xeinebiu/react-mvvm';
-import { ViewModelsType } from '../../vm';
 import {
     Box,
     Flex,
@@ -10,13 +8,15 @@ import {
     Spinner,
     Text,
 } from '@chakra-ui/react';
+import { useGlobalViewModel } from '../../vm';
+
 export const MvvmCreatePostPage: FC = () => {
-    const { postsViewModel } = useViewModel<ViewModelsType>();
+    const { posts } = useGlobalViewModel();
 
     return (
         <Flex direction="column">
             <Heading>Create a Post with View Model</Heading>
-            {postsViewModel.addPostLoading ? (
+            {posts.addPostLoading ? (
                 <Box>
                     Creating ...
                     <Spinner />
@@ -30,17 +30,15 @@ export const MvvmCreatePostPage: FC = () => {
                     <Input
                         variant="flushed"
                         placeholder="Name of the post"
-                        value={postsViewModel.createPostName}
+                        value={posts.createPostName}
                         onChange={e =>
-                            postsViewModel.setCreatePostName(
-                                e.target.value as string,
-                            )
+                            posts.setCreatePostName(e.target.value as string)
                         }
                     />
                     <Button
                         colorScheme="teal"
                         variant="outline"
-                        onClick={postsViewModel.addPost}>
+                        onClick={posts.addPost}>
                         Create
                     </Button>
                 </Flex>

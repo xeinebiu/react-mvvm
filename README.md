@@ -11,7 +11,7 @@ One of the main advantages of using a view model is that it helps to reduce the 
 
 ### Installation
 ````shell
-npm i @xeinebiu/react-mvvm@1.0.3
+npm i @xeinebiu/react-mvvm@1.1.0
 ````
 
 ### Creating View Models
@@ -80,7 +80,7 @@ export function App() {
 ### Retrieving View Models from Pages
 ````tsx
 export const MvvmPostsPage: FC = () => {
-    const { postsViewModel } = useViewModel<ViewModelsType>();
+    const { posts } = useViewModel<ViewModelsType>();
 
     return (
         <Flex direction="column">

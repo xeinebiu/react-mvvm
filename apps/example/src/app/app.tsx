@@ -1,7 +1,6 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import { HomePage, MvvmCreatePostPage, MvvmPostsPage, PostsPage } from './page';
 import { MvvmProvider, useMvvm } from '@xeinebiu/react-mvvm';
-import { HomeViewModelImpl, PostsViewModelImpl, ViewModelsType } from './vm';
 import {
     Box,
     ChakraProvider,
@@ -11,6 +10,7 @@ import {
     Spacer,
 } from '@chakra-ui/react';
 import React from 'react';
+import { HomeViewModelImpl, PostsViewModelImpl } from './vm';
 
 const theme = extendTheme({
     colors: {
@@ -27,7 +27,7 @@ const theme = extendTheme({
 });
 
 export function App() {
-    const viewModels = useMvvm<ViewModelsType>({
+    const viewModels = useMvvm({
         posts: PostsViewModelImpl(),
         home: HomeViewModelImpl(),
     });
