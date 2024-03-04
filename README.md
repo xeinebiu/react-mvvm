@@ -11,7 +11,7 @@ One of the main advantages of using a view model is that it helps to reduce the 
 
 ### Installation
 ````shell
-npm i @xeinebiu/react-mvvm@1.1.0
+npm i @xeinebiu/react-mvvm@1.2.0
 ````
 
 ### Creating View Models
