@@ -1,4 +1,10 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import {
+    useState,
+    useEffect,
+    Dispatch,
+    SetStateAction,
+    useCallback,
+} from 'react';
 
 type ResetFunc = () => void;
 
@@ -39,22 +45,25 @@ export function useRememberState<State>({
         };
     }, [id]);
 
-    const setState = (newState: State | ((prev: State) => State)) => {
-        if (newState instanceof Function) {
-            const updatedState = newState(state);
-            globalState.set(id, updatedState);
-        } else {
-            globalState.set(id, newState);
-        }
+    const setState = useCallback(
+        (newState: State | ((prev: State) => State)) => {
+            if (newState instanceof Function) {
+                const updatedState = newState(state);
+                globalState.set(id, updatedState);
+            } else {
+                globalState.set(id, newState);
+            }
 
-        // inform listeners
-        globalStateListeners.get(id)?.forEach(listener => {
-            listener();
-        });
+            // inform listeners
+            globalStateListeners.get(id)?.forEach(listener => {
+                listener();
+            });
 
-        // trigger re-render
-        setChangesCounter(prev => prev + 1);
-    };
+            // trigger re-render
+            setChangesCounter(prev => prev + 1);
+        },
+        [id, state],
+    );
 
     const resetState = () => {
         globalState.delete(id);
@@ -67,6 +76,12 @@ export function useRememberState<State>({
         // trigger re-render
         setChangesCounter(prev => prev + 1);
     };
+
+    useEffect(() => {
+        if (!globalState.has(id)) {
+            setState(initialState);
+        }
+    }, [id, initialState, setState]);
 
     return [state, setState, resetState];
 }
