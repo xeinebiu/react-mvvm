@@ -80,6 +80,8 @@ export const useSelector: SelectorFunc = (data, selector) => {
     return state;
 };
 
+export const DefaultViewModelProvider = createViewModelProvider({});
+
 export function createViewModelProvider({
     maxCachedViewModels,
 }: {
