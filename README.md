@@ -7,7 +7,7 @@ In software development, a view model is an architectural pattern that separates
 
 ### Installation
 ````shell
-npm i @xeinebiu/react-mvvm@2.0.6
+npm i @xeinebiu/react-mvvm@2.0.7
 ````
 
 ### Creating a ViewModel
