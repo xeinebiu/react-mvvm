@@ -1,99 +1,70 @@
 ## View Models and Separating Business Logic from UI
 
-In software development, a view model is an architectural pattern that separates the presentation layer (UI) from the business logic layer. The view model is responsible for preparing and managing data for the UI, while the business logic layer handles the underlying business logic of the application.
-
-One of the main advantages of using a view model is that it helps to reduce the complexity of the UI layer. By separating the UI layer from the business logic layer, developers can create a more modular and maintainable code
-
-![Diagram explained](./docs/viewmodel.drawio.png)
+In software development, a view model is an architectural pattern that separates the presentation layer (UI) from the business logic layer.
 
 
 ## Getting Started
 
 ### Installation
 ````shell
-npm i @xeinebiu/react-mvvm@1.2.1
+npm i @xeinebiu/react-mvvm@2.0.0
 ````
 
-### Creating View Models
-Since we use typescript for safety, first we need to create the type for our view model.
+### Creating a ViewModel
 
-````typescript
-// posts.vm.ts
+To create a new view model, extend the `ViewModel` class provided by this library:
 
-export type PostsViewModel = {
-  posts: string[];
+```typescript
+import { createViewModel } from '@xeinebiu/react-mvvm';
 
-  loading: boolean;
+const counterViewModel = createViewModel({ counter: 0 }, viewModel => ({
+    increment: () =>
+        viewModel.setState({ counter: viewModel.getState().counter + 1 }),
+    decrement: () =>
+        viewModel.setState({ counter: viewModel.getState().counter - 1 }),
+}));
+```
 
-  addPostLoading: boolean;
+### Using useSelector Hook
 
-  createPostName: string;
+The `useSelector` hook allows you to subscribe to changes in the view model state and efficiently update your components:
 
-  setCreatePostName(name: string): void;
+```tsx
+import { useSelector } from '@xeinebiu/react-mvvm';
 
-  addPost(): void;
-};
-````
-
-````typescript
-// home.vm.ts
-
-export type HomeViewModel = Readonly<{
-    viewModelDescription: string;
-    loading: boolean;
-}>;
-````
-
-Above, we have only defined the type for the view model. However, using view models provides the flexibility to have multiple implementations as needed. For example, we might have a PostsViewModelApi implementation for production use, and a PostsViewModelMock implementation for testing purposes. This approach enables us to switch between different implementations without modifying the rest of the application, making it easier to maintain and update our codebase over time.
-
-### Creating MVVM Type
-Once we have defined our view models, the next step is to combine them into a single object. This enables us to retrieve the view models later on as needed.
-
-````typescript
-// vm.ts
-
-export type ViewModelsType = {
-    posts: PostsViewModel;
-
-    home: HomeViewModel;
-};
-
-````
-
-### Creating MVVM Provider (Scope)
-View models can be provided at different scopes, which determine their lifecycle. By defining the appropriate scope for our view models, we can ensure that they are created and destroyed at the appropriate times, improving the performance and memory usage of our application.
-
-````tsx
-// app.tsx
-
-export function App() {
-  const viewModels = useMvvm<ViewModelsType>({
-    posts: PostsViewModelImpl(),
-    home: HomeViewModelImpl(),
-  });
-
-  return <MvvmProvider viewModels={viewModels}>App Content ...</MvvmProvider>;
-}
-
-````
-
-### Retrieving View Models from Pages
-````tsx
-export const MvvmPostsPage: FC = () => {
-    const { posts } = useViewModel<ViewModelsType>();
+function CounterComponent() {
+    const count = useSelector(counterViewModel, vm => vm.getState().count);
 
     return (
-        <Flex direction="column">
-            Content ...
-        </Flex>
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={counterViewModel.increment}>Increment</button>
+            <button onClick={counterViewModel.decrement}>Decrement</button>
+        </div>
     );
-};
-````
+}
+```
 
-### Run the example App
-````shell
-npm run start
-````
+In this example, the `CounterComponent` will automatically re-render whenever the `count` state in the `CounterViewModel` changes.
 
-### That's it
-Please refer to the example provided under `apps/example` and let us know if you have any questions or suggestions. If anything is unclear or needs improvement, please feel free to raise an issue so that we can address it. I am here to help you create maintainable and high-quality code.
+## API
+
+### ViewModel
+
+| Method                                         | Description                                                                                                               |
+|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| `constructor(initialState: T)`                 | Creates a new instance of ViewModel with the provided initial state.                                                      |
+| `getState(): T`                                | Returns the current state of the ViewModel.                                                                               |
+| `setState(newState: Partial<T>): void`         | Updates the state of the ViewModel with the provided partial state object.                                                |
+| `subscribe(listener: Listener<T>): () => void` | Subscribes a listener function to be called whenever the state of the ViewModel changes. Returns an unsubscribe function. |
+| `dispose(): void`                              | Clears all listeners and disposes of the ViewModel.                                                                       |
+
+### useSelector
+
+#### `(viewModel: T, selector: (viewModel: T) => S): S`
+
+A hook that subscribes to changes in the ViewModel's state and efficiently updates the component when the selected state changes.
+
+## License
+
+This library is licensed under the MIT License.
