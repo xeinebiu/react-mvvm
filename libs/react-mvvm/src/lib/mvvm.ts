@@ -18,7 +18,7 @@ type SelectorFunc = <T, S>(
     selector: (viewModel: ViewModel<T>) => S,
 ) => S;
 
-export function createViewModel<T, E extends object>(
+export function createViewModel<T, E extends object = {}>(
     initialState: T,
     extend?: (viewModel: ViewModel<T>) => E,
 ): ViewModel<T> & ExtendViewModel<E> {
