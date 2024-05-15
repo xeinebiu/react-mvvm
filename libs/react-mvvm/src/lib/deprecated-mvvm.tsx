@@ -4,10 +4,12 @@ type ViewModelProviders<Type> = {
     [Property in keyof Type]: Type[Property];
 };
 
+// @deprecate
 const MvvmContext = React.createContext<
     ViewModelProviders<unknown> | undefined
 >(undefined);
 
+// @deprecate
 export function MvvmProvider<T>({
     viewModels,
     children,
@@ -22,10 +24,12 @@ export function MvvmProvider<T>({
     );
 }
 
+// @deprecate
 export function useViewModel<VM>(): ViewModelProviders<VM> {
     return useContext(MvvmContext) as ViewModelProviders<VM>;
 }
 
+// @deprecate
 export function useMvvm<VM>(viewModels: VM): ViewModelProviders<VM> {
     return useMemo<ViewModelProviders<VM>>(() => {
         const newViewModels = {};
