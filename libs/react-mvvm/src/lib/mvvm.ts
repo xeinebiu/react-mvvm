@@ -86,22 +86,26 @@ export function createViewModelProvider({
     maxCachedViewModels,
 }: {
     maxCachedViewModels?: number;
-}): <T>(
-    id: string,
-    dependencies: unknown[],
-    create: () => ViewModel<T>,
-) => ViewModel<T> {
+}): <T>(params: {
+    key: string;
+    dependencies: unknown[];
+    create: () => ViewModel<T>;
+}) => ViewModel<T> {
     const cache: {
         key: string;
         dependencies: unknown[];
         viewModel: ViewModel<unknown>;
     }[] = [];
 
-    return <T>(
-        key: string,
-        dependencies: unknown[],
-        create: () => ViewModel<T>,
-    ): ViewModel<T> => {
+    return <T>({
+        key,
+        dependencies,
+        create,
+    }: {
+        key: string;
+        dependencies: unknown[];
+        create: () => ViewModel<T>;
+    }): ViewModel<T> => {
         const cachedItem = cache.find(
             item =>
                 item.key === key &&
