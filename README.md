@@ -33,7 +33,7 @@ The `useSelector` hook allows you to subscribe to changes in the view model stat
 import { useSelector } from '@xeinebiu/react-mvvm';
 
 function CounterComponent() {
-    const count = useSelector(counterViewModel, vm => vm.getState().count);
+    const count = useSelector(counterViewModel, vm => vm.getState().counter);
 
     return (
         <div>
@@ -45,7 +45,7 @@ function CounterComponent() {
 }
 ```
 
-In this example, the `CounterComponent` will automatically re-render whenever the `count` state in the `CounterViewModel` changes.
+In this example, the `CounterComponent` will automatically re-render whenever the `counter` state in the `CounterViewModel` changes.
 
 ## API
 
